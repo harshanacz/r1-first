@@ -5,13 +5,23 @@ function App() {
   const [count, setCount] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
-  const addCount = () => {
-    setCount(count + 1);
-  };
+  const saveCountLocally=( value)=>{
+    localStorage.setItem("count",value );
+  }
 
-  const removeCountby5 = () => {
-    setCount(count - 5);
-  };
+  const viewLocalCount=()=>{
+    const intVal = typeof window !== 'undefined' ? localStorage.getItem('count') : null
+    
+    toast(intVal);
+  }
+
+  // const addCount = () => {
+  //   setCount(count + 1);
+  // };
+
+  // const removeCountby5 = () => {
+  //   setCount(count - 5);
+  // };
 
   const handleInput = () => {
     if (inputValue !== "") {
@@ -19,7 +29,10 @@ function App() {
       if (isNaN(integerResult) || !Number.isInteger(integerResult)) {
         toast("Please enter a valid integer.");
       } else {
-        setCount(count + integerResult);
+        const newCount = count + integerResult;
+
+        setCount(newCount);
+        saveCountLocally(newCount);
         setInputValue("");
       }
     } else {
@@ -51,6 +64,15 @@ function App() {
       >
         Submit Input
       </button>
+
+      <br/><button
+        style={styles.button}
+        onClick={viewLocalCount}
+        aria-label="view"
+      >
+        View Count value
+      </button>
+     
       <ToastContainer />
     </div>
   );
