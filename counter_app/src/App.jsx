@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 function App() {
@@ -23,6 +23,12 @@ function App() {
   //   setCount(count - 5);
   // };
 
+  const removeCountFromLocalStorage = () => {
+    localStorage.removeItem("count"); 
+    setCount(0); 
+    toast("Count removed from localStorage.");
+  };
+
   const handleInput = () => {
     if (inputValue !== "") {
       const integerResult = Number(inputValue);
@@ -39,6 +45,14 @@ function App() {
       toast("Enter Value.");
     }
   };
+
+  useEffect(()=>{
+    const savedCount = localStorage.getItem('count');
+
+    if (savedCount !== null) {
+      setCount(Number(savedCount));  
+    }
+  }, [])
 
   return (
     <div style={styles.main}>
@@ -72,7 +86,13 @@ function App() {
       >
         View Count value
       </button>
-     
+      <br/><button
+        style={styles.button}
+        onClick={removeCountFromLocalStorage}
+        aria-label="view"
+      >
+        Reset
+      </button>
       <ToastContainer />
     </div>
   );
