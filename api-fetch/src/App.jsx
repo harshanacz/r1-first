@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import.meta.env.WEATHER_API_KEY;
 
@@ -24,12 +24,30 @@ function App() {
           q: city,
         },
       });
-      const value = response.data.current.temp_c;
-      setWeatherValue(value);
-      setHaveValues(true);
 
-      console.log(response.data);
+      if (response.status === 200) {
+        const value = response.data.current.temp_c;
+        setWeatherValue(value);
+        setHaveValues(true);
+        toast(`The temperature in ${city} is ${value}°C`);
+        console.log(response.data);
+      } else {
+        throw new Error(`Unexpected status code: ${response.status}`);
+      }
     } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          toast.error("Bad request. Please check the city name.");
+        } else if (error.response.status === 404) {
+          toast.error("City not found. Please enter a valid city name.");
+        } else {
+          toast.error(`Error: ${error.response.status} - ${error.response.data.message}`);
+        }
+      } else if (error.request) {
+        toast.error("No response from the server. Please try again later.");
+      } else {
+        toast.error(`Error: ${error.message}`);
+      }
       console.error("Error fetching weather:", error);
     }
   };
@@ -50,6 +68,10 @@ function App() {
     cursor: "pointer",
     borderRadius: "5px",
   };
+
+  useEffect(() => {
+    getWeather();
+}, [])
 
   return (
     <div style={containerStyle}>
