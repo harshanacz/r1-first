@@ -10,13 +10,19 @@ function App() {
   const [inputValue, setInputValue] = useState("");
 
 
-  const getWeather = async ( city ="landon") => {
+  const getWeather = async () => {
+    let  city ="landon";
+    if(inputValue != ""){
+      city = inputValue;
+    }
+
+    
     
     try {
       const response = await axios.get(BASE_URL, {
         params: {
           key: API_KEY,
-          q: 'belihuloya'
+          q: city
         }
       });
       const value = response.data.location.country
@@ -47,6 +53,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
+      <h1>{inputValue}</h1>
       <input
         type="text"
         value={inputValue}
