@@ -1,19 +1,26 @@
 import axios from 'axios';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import.meta.env.WEATHER_API_KEY
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = 'https://api.weatherapi.com/v1/current.json';
 
 function App() {
-  const getWeather = async () => {
-    const city = "london";
+  const [inputValue, setInputValue] = useState("");
+
+
+  const getWeather = async ( city ="landon") => {
+    
     try {
       const response = await axios.get(BASE_URL, {
         params: {
           key: API_KEY,
-          q: city
+          q: 'belihuloya'
         }
       });
+      const value = response.data.location.country
+      toast(value);
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching weather:', error);
@@ -40,8 +47,16 @@ function App() {
 
   return (
     <div style={containerStyle}>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Input city name"
+      />
+
+
       <button style={buttonStyle} onClick={getWeather}>Get Weather</button>
-    </div>
+      <ToastContainer />  </div>
   );
 }
 
