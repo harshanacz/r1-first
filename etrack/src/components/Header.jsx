@@ -1,11 +1,12 @@
 
-import { IoAddCircleSharp } from "react-icons/io5";
+import { IoAddCircleSharp  } from "react-icons/io5";
+import { AiOutlineClose } from "react-icons/ai";
 
 
 const Header = ({isFormAvailable, setisFormAvailable}) => {
 
   const handleClick = ()=>{
-    setisFormAvailable(true);
+    setisFormAvailable(!isFormAvailable);
   }
 
   return (
@@ -22,7 +23,7 @@ const Header = ({isFormAvailable, setisFormAvailable}) => {
     }
     onClick={handleClick}
       >
-          <IoAddCircleSharp />
+       {isFormAvailable ? <AiOutlineClose /> : <IoAddCircleSharp />}
         </button>
       </div>
 
