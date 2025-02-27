@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react'
+import { categories } from './../data/data.js'; 
+import Select from 'react-select';
 
 const ExpenseForm = () => {
     const [title, setTitle] = useState("");
@@ -9,6 +11,18 @@ const ExpenseForm = () => {
   const handleSubmit = ()=>{
 
   }
+
+
+
+  const categoryOptions = categories.map((cat) => ({
+    value: cat.title, 
+    label: ( 
+      <div className="flex items-center">
+        <img src={cat.icon} alt={cat.title} className="w-4 h-4 mr-2" />
+        {cat.title}
+      </div>
+    ),
+  }));
 
 
   return (
@@ -27,12 +41,14 @@ const ExpenseForm = () => {
         onChange={(e) => setAmount(e.target.value)}
         className="w-full p-2 mb-2 border rounded"
       />
-      <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full p-2 mb-2 border rounded">
-        <option value="">Select Category</option>
-        <option value="Food">Food</option>
-        <option value="Transport">Transport</option>
-        <option value="Shopping">Shopping</option>
-      </select>
+      <Select
+        options={categoryOptions} 
+        value={category}
+        onChange={(selected) => setCategory(selected)}
+        placeholder="Select Category"
+        className="mb-2"
+        formatOptionLabel={(option) => option.label} 
+      />
       <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Add Expense</button>
     </form>
   );
@@ -40,11 +56,3 @@ const ExpenseForm = () => {
 
 export default ExpenseForm
 
-// {
-//     id: "1",
-//     title: "Groceries",
-//     amount: 2500,
-//     category: "Food",
-//     date: "2025-02-12"
-//   }
-  
