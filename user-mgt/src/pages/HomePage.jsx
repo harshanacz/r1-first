@@ -7,8 +7,8 @@ const HomePage = () => {
     <div>
       <h1>HOME PAGE</h1>
       <br />
-      <Link to="/about" style={{ textDecoration: 'none' }}>
-        <Button variant="contained" >About Us</Button>
+      <Link to="/add" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" >Add users</Button>
       </Link>
     </div>
   );
