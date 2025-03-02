@@ -1,7 +1,17 @@
+import { Button } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <h1>HOME PAGE</h1>
+      <br />
+      <Link to="/about" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" >About Us</Button>
+      </Link>
+    </div>
+  );
 };
 
 export default HomePage;
