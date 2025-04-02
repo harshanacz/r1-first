@@ -1,4 +1,4 @@
-import path from 'path';
+
 import { lazy } from 'react';
 import UsersListPage from '../pages/UsersListPage.jsx';
 import AddUserPage from '../pages/AddUserPage.jsx';
